@@ -1,1 +1,13 @@
-<script>window.location = "https://t.me/" + (new URLSearchParams(window.location.search).get('bot') || 'default_bot');</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirect to Bot</title>
+    <script>
+        window.location = process.env.BOT_LINK;
+    </script>
+</head>
+<body>
+    Redirecting...
+</body>
+</html>

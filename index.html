@@ -1,13 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Redirect to Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamGirlBot - Redirecting...</title>
+    <meta http-equiv="refresh" content="0;url=https://t.me/DreamGirlBot">
     <script>
-        window.location = process.env.BOT_LINK;
+        // Пробуем получить актуальную ссылку из API
+        fetch('/api/bot-link')
+            .then(response => response.json())
+            .then(data => {
+                if (data.bot_link) {
+                    window.location.href = data.bot_link;
+                }
+            })
+            .catch(() => {
+                // Если API не отвечает, используем дефолтную ссылку
+                window.location.href = "https://t.me/DreamGirlBot";
+            });
     </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            padding: 40px;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    Redirecting...
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Перенаправляем в DreamGirlBot...</h1>
+        <p>Если перенаправление не произошло автоматически, <a href="https://t.me/DreamGirlBot" style="color: white; text-decoration: underline;">нажмите сюда</a>.</p>
+    </div>
 </body>
 </html>

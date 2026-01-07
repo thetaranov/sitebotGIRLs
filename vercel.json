@@ -2,14 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/get-bot-link.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "api/update-bot-link.py",
-      "use": "@vercel/python"
-    },
-    {
       "src": "index.html",
       "use": "@vercel/static"
     }
@@ -21,18 +13,11 @@
     },
     {
       "src": "/api/get-bot-link",
-      "dest": "/api/get-bot-link.py"
-    },
-    {
-      "src": "/api/update-bot-link",
-      "dest": "/api/update-bot-link.py"
+      "dest": "/index.html"
     },
     {
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "env": {
-    "PYTHON_VERSION": "3.9"
-  }
+  ]
 }

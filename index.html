@@ -2,59 +2,49 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamGirlBot - Redirecting...</title>
     <meta http-equiv="refresh" content="0;url=https://t.me/DreamGirlBot">
+    <title>DreamGirlBot - Redirecting...</title>
     <script>
-        // Пробуем получить актуальную ссылку из API
-        fetch('/api/bot-link')
-            .then(response => response.json())
-            .then(data => {
-                if (data.bot_link) {
-                    window.location.href = data.bot_link;
+        // Получаем актуальную ссылку из localStorage или API
+        async function getBotLink() {
+            // Проверяем кэш в localStorage (действителен 5 минут)
+            const cached = localStorage.getItem('bot_link_cache');
+            if (cached) {
+                const { link, timestamp } = JSON.parse(cached);
+                if (Date.now() - timestamp < 5 * 60 * 1000) {
+                    return link;
                 }
-            })
-            .catch(() => {
-                // Если API не отвечает, используем дефолтную ссылку
-                window.location.href = "https://t.me/DreamGirlBot";
-            });
+            }
+            
+            // Запрашиваем свежую ссылку
+            try {
+                const response = await fetch('/api/get-bot-link');
+                if (response.ok) {
+                    const data = await response.json();
+                    const link = data.bot_link || 'https://t.me/DreamGirlBot';
+                    
+                    // Сохраняем в кэш
+                    localStorage.setItem('bot_link_cache', JSON.stringify({
+                        link: link,
+                        timestamp: Date.now()
+                    }));
+                    
+                    return link;
+                }
+            } catch (error) {
+                console.log('Using default bot link');
+            }
+            
+            return 'https://t.me/DreamGirlBot';
+        }
+        
+        // Перенаправляем на актуального бота
+        getBotLink().then(link => {
+            window.location.href = link;
+        });
     </script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            color: white;
-        }
-        .container {
-            padding: 40px;
-        }
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid white;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="spinner"></div>
-        <h1>Перенаправляем в DreamGirlBot...</h1>
-        <p>Если перенаправление не произошло автоматически, <a href="https://t.me/DreamGirlBot" style="color: white; text-decoration: underline;">нажмите сюда</a>.</p>
-    </div>
+    <p>Перенаправляем в DreamGirlBot...</p>
 </body>
 </html>

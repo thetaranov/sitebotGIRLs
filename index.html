@@ -2,49 +2,115 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=https://t.me/DreamGirlBot">
-    <title>DreamGirlBot - Redirecting...</title>
+    <title>DreamGirlBot - Создай свою девушку мечты</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0;url=https://t.me/drmgrlbot">
+    
+    <!-- Ярлыки для приложений -->
+    <meta property="og:title" content="DreamGirlBot - Создай свою девушку мечты">
+    <meta property="og:description" content="ИИ создаёт твою идеальную девушку по описанию!">
+    <meta property="og:image" content="https://i.imgur.com/placeholder.jpg">
+    
+    <!-- Для WhatsApp, Telegram -->
+    <meta property="og:url" content="https://t.me/drmgrlbot">
+    <meta property="og:type" content="website">
+    
+    <!-- Для iOS Safari -->
+    <meta name="apple-mobile-web-app-title" content="DreamGirlBot">
+    
+    <!-- Скрипт резервного редиректа -->
     <script>
-        // Получаем актуальную ссылку из localStorage или API
-        async function getBotLink() {
-            // Проверяем кэш в localStorage (действителен 5 минут)
-            const cached = localStorage.getItem('bot_link_cache');
-            if (cached) {
-                const { link, timestamp } = JSON.parse(cached);
-                if (Date.now() - timestamp < 5 * 60 * 1000) {
-                    return link;
-                }
-            }
-            
-            // Запрашиваем свежую ссылку
-            try {
-                const response = await fetch('/api/get-bot-link');
-                if (response.ok) {
-                    const data = await response.json();
-                    const link = data.bot_link || 'https://t.me/DreamGirlBot';
-                    
-                    // Сохраняем в кэш
-                    localStorage.setItem('bot_link_cache', JSON.stringify({
-                        link: link,
-                        timestamp: Date.now()
-                    }));
-                    
-                    return link;
-                }
-            } catch (error) {
-                console.log('Using default bot link');
-            }
-            
-            return 'https://t.me/DreamGirlBot';
-        }
+        // Основной редирект через мета-тег сработает сразу
+        // Этот скрипт на случай, если мета-тег не сработал
+        setTimeout(function() {
+            window.location.href = "https://t.me/drmgrlbot";
+        }, 100);
         
-        // Перенаправляем на актуального бота
-        getBotLink().then(link => {
-            window.location.href = link;
-        });
+        // Записываем в историю для аналитики
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX'); // Если будет Google Analytics
+        
+        // Отслеживаем переход
+        try {
+            fetch('https://api.countapi.xyz/hit/sitebot-gir-ls/redirect');
+        } catch(e) {}
     </script>
+    
+    <style>
+        /* Минимальные стили на случай задержки */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 500px;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+        p {
+            margin: 0 0 20px 0;
+            opacity: 0.9;
+        }
+        a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 <body>
-    <p>Перенаправляем в DreamGirlBot...</p>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Открываем DreamGirlBot...</h1>
+        <p>Автоматически перенаправляем в Telegram-бот</p>
+        
+        <!-- Прямая ссылка на случай, если редирект не сработал -->
+        <p>Если перенаправление не сработало, нажмите:</p>
+        <a href="https://t.me/drmgrlbot" class="button">👉 Открыть DreamGirlBot</a>
+        
+        <p style="margin-top: 30px; font-size: 14px; opacity: 0.7;">
+            Бот для создания идеальной девушки с помощью ИИ
+        </p>
+    </div>
 </body>
 </html>
